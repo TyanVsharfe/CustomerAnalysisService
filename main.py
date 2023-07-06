@@ -24,15 +24,19 @@ dp = Dispatcher(bot, storage=storage)
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
+    f = open('users.txt', 'w')
+    f.write(f"{message.from_user.id} {message.from_user.username}")
+    f.close()
     if Test.UserTest.status == "banned":
         await handlers.Form.banned.set()
-        await message.answer("Вы заблокированы")
+        await message.answer("Вы заблокированы", reply_markup=types.ReplyKeyboardRemove())
     else:
-        await message.reply("Привет! Перед началом работы ты должен прочитать и принять пользовательское соглашение.")
+        await message.reply("Привет! Перед началом работы ты должен прочитать и принять пользовательское соглашение.", reply_markup=types.ReplyKeyboardRemove())
         await message.answer(text=config.terms_of_service, reply_markup=query_kb.keyboard_agreement)
         handlers.register_handlers(dp)
         query_handlers.register_query_handlers(dp)
-        dp.message_handlers.unregister(start_message)
+        await delete_start_message()
+        # dp.register_message_handler(agreement_message)
 
 
 @dp.message_handler()
@@ -57,8 +61,14 @@ async def handle_banned_commands(message: types.Message, state: FSMContext):
 @dp.callback_query_handler(text="accept_agreement")
 async def accept_agreement(call: CallbackQuery):
     await delete_agreement_message()
-    #TODO ПРИ ПЕРВОМ ЗАХОДЕ ЗАХОДИТ КАК ДЕФОЛТ ПОЛЬЗОВАТЕЛЬ, ИСПРАВИТЬ, ПРОБЛЕМА В handlers.py, нельзя подсосать методы
-    await call.message.answer(text="Главное меню", reply_markup=kb.keyboard_main_menu)
+    if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
+        await handlers.main_menu_with_admin_panel(call.message)
+    else:
+        await call.message.answer(text="Главное меню", reply_markup=kb.keyboard_main_menu)
+
+
+async def delete_start_message():
+    dp.message_handlers.unregister(start_message)
 
 
 async def delete_agreement_message():

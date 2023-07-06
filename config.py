@@ -1,6 +1,9 @@
 BOT_TOKEN = '6145336505:AAHq7rZAY4s2Igii_zcBZZ8l09feRKuUl64'
 # BOT_TOKEN = '6135950538:AAEBn9ADx52QAjLmopzc87ONTT1Es-D5HS0'
 
+HISTORY = "history"
+FAVOURITES = "favourites"
+
 
 terms_of_service = "Пункты пользовательского соглашения\n" \
                    "1. Разрешаю использование публичных данных аккаунта\n" \

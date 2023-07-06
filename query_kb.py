@@ -12,7 +12,19 @@ keyboard_agreement.add(InlineKeyboardButton(text="Принять пользов�
 keyboard_history_report = InlineKeyboardMarkup()
 keyboard_history_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="history_up")
 keyboard_history_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="history_down")
-keyboard_history_report.add()
+
+# Просмотр отчета
+keyboard_watch_report = InlineKeyboardMarkup()
+watch_report_button_1 = InlineKeyboardButton(text="Добавить в избранное", callback_data="add_favourite")
+watch_report_button_2 = InlineKeyboardButton(text="Удалить", callback_data="delete_history_favourite")
+watch_report_button_3 = InlineKeyboardButton(text="Просмотр", callback_data="watch")
+keyboard_watch_report.add(watch_report_button_1)
+keyboard_watch_report.add(watch_report_button_2, watch_report_button_3)
+
+keyboard_favourite_report = InlineKeyboardMarkup()
+keyboard_favourite_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="favourite_up")
+keyboard_favourite_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="favourite_down")
+
 
 
 

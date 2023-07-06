@@ -55,6 +55,15 @@ favourites_button_3 = types.KeyboardButton(text="Забанить")
 keyboard_select_user_manager.add(favourites_button_1, favourites_button_2)
 keyboard_select_user_manager.add(favourites_button_3)
 
+# Выбрать пользователя Админ
+keyboard_select_user_admin = types.ReplyKeyboardMarkup(resize_keyboard=True)
+select_user_admin_button_1 = types.KeyboardButton(text="Изменить количество токенов")
+select_user_admin_button_2 = types.KeyboardButton(text="Информация о пользователе")
+select_user_admin_button_3 = types.KeyboardButton(text="Забанить")
+select_user_admin_button_4 = types.KeyboardButton(text="Поменять роль")
+keyboard_select_user_admin.add(select_user_admin_button_1, select_user_admin_button_2)
+keyboard_select_user_admin.add(select_user_admin_button_3, select_user_admin_button_4)
+
 # История
 keyboard_history = types.ReplyKeyboardMarkup(resize_keyboard=True)
 # history_button_1 = types.KeyboardButton(text="Вверх")
@@ -78,8 +87,8 @@ keyboard_watch_report = types.ReplyKeyboardMarkup(resize_keyboard=True)
 watch_report_button_1 = types.KeyboardButton(text="Добавить в избранное")
 watch_report_button_2 = types.KeyboardButton(text="Удалить")
 watch_report_button_3 = types.KeyboardButton(text="Просмотр")
-keyboard_watch_report.add(favourites_button_1)
-keyboard_watch_report.add(favourites_button_2, favourites_button_3)
+keyboard_watch_report.add(watch_report_button_1)
+keyboard_watch_report.add(watch_report_button_2, watch_report_button_3)
 
 # Пользовательское соглашение
 keyboard_agreement = types.ReplyKeyboardMarkup(resize_keyboard=True)
