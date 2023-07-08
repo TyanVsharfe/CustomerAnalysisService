@@ -8,10 +8,10 @@ from aiogram.types import CallbackQuery
 
 import Test
 import config
-import handlers
-import kb
-import query_handlers
-import query_kb
+from src import handlers
+
+from src.handlers.handlers import main_menu_with_admin_panel
+from src.keyboards import query_kb, kb
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -32,25 +32,25 @@ async def start(message: types.Message):
         await message.answer("Вы заблокированы", reply_markup=types.ReplyKeyboardRemove())
     else:
         if not Test.UserTest.agreement:
-            await message.reply("Привет! Перед началом работы ты должен прочитать и принять пользовательское соглашение.", reply_markup=types.ReplyKeyboardRemove())
+            await message.reply("Привет! Перед началом работы вы должны прочитать и принять пользовательское соглашение.", reply_markup=types.ReplyKeyboardRemove())
             await message.answer(text=config.terms_of_service, reply_markup=query_kb.keyboard_agreement)
             Test.UserTest.agreement = True
         else:
             if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
-                await handlers.main_menu_with_admin_panel(message)
+                await main_menu_with_admin_panel(message)
             else:
                 await message.answer("Вы вошли в главное меню", reply_markup=kb.keyboard_main_menu)
         handlers.register_handlers(dp)
-        query_handlers.register_query_handlers(dp)
-        await delete_start_message()
+        handlers.register_query_handlers(dp)
+        dp.message_handlers.unregister(start_message)
         # dp.register_message_handler(agreement_message)
 
 
 @dp.message_handler()
 async def start_message(message: types.Message):
     await bot.set_my_commands([
-        aiogram.types.BotCommand("start", "it is start command..."),
-        aiogram.types.BotCommand("help", "it is help command...")
+        aiogram.types.BotCommand("start", "Начать работу"),
+        # aiogram.types.BotCommand("help", "it is help command...")
     ])
     await message.answer("Для начала работы введи команду /start")
 
@@ -67,19 +67,11 @@ async def handle_banned_commands(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(text="accept_agreement")
 async def accept_agreement(call: CallbackQuery):
-    await delete_agreement_message()
+    dp.message_handlers.unregister(agreement_message)
     if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
-        await handlers.main_menu_with_admin_panel(call.message)
+        await main_menu_with_admin_panel(call.message)
     else:
         await call.message.answer(text="Главное меню", reply_markup=kb.keyboard_main_menu)
-
-
-async def delete_start_message():
-    dp.message_handlers.unregister(start_message)
-
-
-async def delete_agreement_message():
-    dp.message_handlers.unregister(agreement_message)
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)

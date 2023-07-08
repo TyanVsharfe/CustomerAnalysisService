@@ -42,7 +42,7 @@ keyboard_admin_panel.add(admin_panel_button_4)
 keyboard_select_user_manager = types.ReplyKeyboardMarkup(resize_keyboard=True)
 favourites_button_1 = types.KeyboardButton(text="Изменить количество токенов")
 favourites_button_2 = types.KeyboardButton(text="Информация о пользователе")
-favourites_button_3 = types.KeyboardButton(text="Забанить")
+favourites_button_3 = types.KeyboardButton(text="Забанить/Разбанить")
 keyboard_select_user_manager.add(favourites_button_1, favourites_button_2)
 keyboard_select_user_manager.add(favourites_button_3)
 

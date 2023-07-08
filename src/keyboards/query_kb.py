@@ -1,14 +1,16 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+# НАЗАД В ГЛАВНОЕ МЕНЮ
 keyboard_main_menu = InlineKeyboardMarkup()
 keyboard_main_menu.add(InlineKeyboardButton(text="Назад", callback_data="main_menu"),)
 
-keyboard_manager_and_admin_pa = InlineKeyboardMarkup()
-keyboard_manager_and_admin_pa.add(InlineKeyboardButton(text="Назад", callback_data="manager_pa"),)
+keyboard_admin_panel = InlineKeyboardMarkup()
+keyboard_admin_panel.add(InlineKeyboardButton(text="Назад", callback_data="admin_panel"),)
 
 keyboard_agreement = InlineKeyboardMarkup()
 keyboard_agreement.add(InlineKeyboardButton(text="Принять пользовательское соглашение", callback_data="accept_agreement"),)
 
+# ДЛЯ ПРОСМОТРА ОТЧЕТА ИЗБРАННОЕ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
 keyboard_history_report = InlineKeyboardMarkup()
 keyboard_history_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="history_up")
 keyboard_history_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="history_down")
@@ -21,6 +23,7 @@ watch_report_button_3 = InlineKeyboardButton(text="Просмотр", callback_d
 keyboard_watch_report.add(watch_report_button_1)
 keyboard_watch_report.add(watch_report_button_2, watch_report_button_3)
 
+# ДЛЯ ПРОСМОТРА ОТЧЕТА ИСТОРИЯ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
 keyboard_favourite_report = InlineKeyboardMarkup()
 keyboard_favourite_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="favourite_up")
 keyboard_favourite_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="favourite_down")
@@ -35,6 +38,31 @@ keyboard_change_role.add(change_role_button_1, change_role_button_2)
 keyboard_cancel_change_role = InlineKeyboardMarkup()
 cancel_role_button_1 = InlineKeyboardButton(text="Отмена", callback_data="cancel_change_token")
 keyboard_cancel_change_role.add(cancel_role_button_1)
+
+# Поменять роль
+keyboard_cancel_product = InlineKeyboardMarkup()
+cancel_product_button_1 = InlineKeyboardButton(text="Отмена", callback_data="cancel_product")
+keyboard_cancel_product.add(cancel_product_button_1)
+
+# Выбрать тип анализа
+# TODO СДЕЛАТЬ РЕАЛИЗАЦИЮ
+keyboard_analysis_type = InlineKeyboardMarkup()
+analysis_type_button_1 = InlineKeyboardButton(text="Анализ 1", callback_data="analysis_type_1")
+analysis_type_button_2 = InlineKeyboardButton(text="Анализ 2", callback_data="analysis_type_2")
+analysis_type_button_3 = InlineKeyboardButton(text="Анализ 3", callback_data="analysis_type_3")
+analysis_type_button_4 = InlineKeyboardButton(text="Анализ 4", callback_data="analysis_type_4")
+keyboard_analysis_type.add(analysis_type_button_1, analysis_type_button_2)
+keyboard_analysis_type.add(analysis_type_button_3, analysis_type_button_4)
+
+# Интерактив с анализом
+# TODO СДЕЛАТЬ РЕАЛИЗАЦИЮ
+keyboard_aa = InlineKeyboardMarkup()
+aa_button_1 = InlineKeyboardButton(text="Открыть на сайте", callback_data="22")
+aa_button_2 = InlineKeyboardButton(text="Добавить в избранное", callback_data="32")
+aa_button_3 = InlineKeyboardButton(text="Назад", callback_data="23")
+keyboard_aa.add(aa_button_1)
+keyboard_aa.add(aa_button_2)
+keyboard_aa.add(aa_button_3)
 
 
 

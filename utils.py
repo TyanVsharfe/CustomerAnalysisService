@@ -2,12 +2,11 @@ from aiogram import types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 import Test
-import query_kb
+from src.keyboards import query_kb
 
 report_position = 0
 
 
-# TODO СДЕЛАТЬ ЧТОБЫ ПЕРЕРИСОВЫВАЛОСЬ ТЕКУЩЕЕ СООБЩЕНИЕ
 async def show_reports(message: types.Message, owner, action="default", reports=None):
     if (reports is None) | len(reports) == 0:
         await message.answer("Отчеты отсутствуют")
