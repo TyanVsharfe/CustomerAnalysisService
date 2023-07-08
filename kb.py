@@ -29,23 +29,14 @@ pa_user_button_4 = types.KeyboardButton(text="Помощь")
 keyboard_user_pa.add(pa_user_button_1, pa_user_button_2)
 keyboard_user_pa.add(pa_user_button_4)
 
-# Личный кабинет менеджера
-keyboard_manager_pa = types.ReplyKeyboardMarkup(resize_keyboard=True)
-pa_manager_button_1 = types.KeyboardButton(text="Просмотр новых пользователей")
-pa_manager_button_2 = types.KeyboardButton(text="Просмотр активности")
+# Админ-панель
+keyboard_admin_panel = types.ReplyKeyboardMarkup(resize_keyboard=True)
+admin_panel_button_1 = types.KeyboardButton(text="Просмотр новых пользователей")
+admin_panel_button_2 = types.KeyboardButton(text="Просмотр активности")
 # pa_manager_button_3 = types.KeyboardButton(text="Назад")
-pa_manager_button_4 = types.KeyboardButton(text="Выбрать пользователя")
-keyboard_manager_pa.add(pa_manager_button_1, pa_manager_button_2)
-keyboard_manager_pa.add(pa_manager_button_4)
-
-# Личный кабинет админа
-keyboard_admin_pa = types.ReplyKeyboardMarkup(resize_keyboard=True)
-pa_admin_button_1 = types.KeyboardButton(text="Просмотр новых пользователей")
-pa_admin_button_2 = types.KeyboardButton(text='Просмотр активности')
-# pa_admin_button_3 = types.KeyboardButton(text="Назад")
-pa_admin_button_4 = types.KeyboardButton(text="Выбрать пользователя")
-keyboard_admin_pa.add(pa_admin_button_1, pa_admin_button_2)
-keyboard_admin_pa.add(pa_admin_button_4)
+admin_panel_button_4 = types.KeyboardButton(text="Выбрать пользователя")
+keyboard_admin_panel.add(admin_panel_button_1, admin_panel_button_2)
+keyboard_admin_panel.add(admin_panel_button_4)
 
 # Выбрать пользователя менеджер
 keyboard_select_user_manager = types.ReplyKeyboardMarkup(resize_keyboard=True)

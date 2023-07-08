@@ -25,6 +25,16 @@ keyboard_favourite_report = InlineKeyboardMarkup()
 keyboard_favourite_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="favourite_up")
 keyboard_favourite_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="favourite_down")
 
+# Поменять роль
+keyboard_change_role = InlineKeyboardMarkup()
+change_role_button_1 = InlineKeyboardButton(text="Сделать пользователем", callback_data="make_user")
+change_role_button_2 = InlineKeyboardButton(text="Сделать менеджером", callback_data="make_manager")
+keyboard_change_role.add(change_role_button_1, change_role_button_2)
+
+# Поменять роль
+keyboard_cancel_change_role = InlineKeyboardMarkup()
+cancel_role_button_1 = InlineKeyboardButton(text="Отмена", callback_data="cancel_change_token")
+keyboard_cancel_change_role.add(cancel_role_button_1)
 
 
 

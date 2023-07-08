@@ -31,8 +31,15 @@ async def start(message: types.Message):
         await handlers.Form.banned.set()
         await message.answer("Вы заблокированы", reply_markup=types.ReplyKeyboardRemove())
     else:
-        await message.reply("Привет! Перед началом работы ты должен прочитать и принять пользовательское соглашение.", reply_markup=types.ReplyKeyboardRemove())
-        await message.answer(text=config.terms_of_service, reply_markup=query_kb.keyboard_agreement)
+        if not Test.UserTest.agreement:
+            await message.reply("Привет! Перед началом работы ты должен прочитать и принять пользовательское соглашение.", reply_markup=types.ReplyKeyboardRemove())
+            await message.answer(text=config.terms_of_service, reply_markup=query_kb.keyboard_agreement)
+            Test.UserTest.agreement = True
+        else:
+            if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
+                await handlers.main_menu_with_admin_panel(message)
+            else:
+                await message.answer("Вы вошли в главное меню", reply_markup=kb.keyboard_main_menu)
         handlers.register_handlers(dp)
         query_handlers.register_query_handlers(dp)
         await delete_start_message()

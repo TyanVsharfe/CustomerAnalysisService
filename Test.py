@@ -12,6 +12,7 @@ class UserTest:
         self.registration = "05.09.2002"
         self.role = role[0]
         self.status = "active"
+        self.agreement = False
 
     username = "vlad"
     token_count = 3000
@@ -19,6 +20,7 @@ class UserTest:
     role = role[2]
     # status = "banned"
     status = "active"
+    agreement = False
 
 
 UserOne = UserTest("biba", 2150)
