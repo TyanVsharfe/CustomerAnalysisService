@@ -52,8 +52,7 @@ async def main_menu_with_admin_panel(message: types.Message):
 # АДМИН-ПАНЕЛЬ
 async def admin_panel(message: types.Message):
     if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
-        keyboard = kb.keyboard_admin_panel
-        await message.answer("Вы вошли в админ-панель", reply_markup=keyboard)
+        await message.answer("Вы вошли в админ-панель", reply_markup=query_kb.keyboard_admin_panel)
         await message.answer("Вернуться в главное меню:", reply_markup=query_kb.keyboard_main_menu)
 
 
@@ -128,7 +127,6 @@ async def personal_change_token(message: types.Message):
 
 # ПОМЕНЯТЬ КОЛ-ВО ТОКЕНОВ (State)
 async def process_change_token(message: types.Message, state: FSMContext):
-    # TODO ПРОВЕРКА НА INT ЕСЛИ НЕТ ОШИБКА
     if message.text.isdigit():
         await state.finish()
         Test.UserTest.token_count = message.text
@@ -148,10 +146,14 @@ async def personal_change_role(message: types.Message):
 # БАН/РАЗБАН
 async def personal_am_ban(message: types.Message):
     # TODO ДОДЕЛАТЬ КОГДА СКИНУТ (ПЕРЕДЕЛАТЬ В QUERY HANDLER | БАН/РАЗБАН)
-    Test.UserTest.status = "banned"
-    await Form.banned.set()
-    await message.answer(text=f"Пользователь {Test.UserTest.username} забанен",
-                         reply_markup=query_kb.keyboard_main_menu)
+    if Test.UserTest.status == "banned":
+        Test.UserTest.status = "active"
+        await message.answer(text=f"Пользователь {Test.UserTest.username} разбанен",
+                             reply_markup=query_kb.keyboard_main_menu)
+    else:
+        Test.UserTest.status = "banned"
+        await message.answer(text=f"Пользователь {Test.UserTest.username} забанен",
+                             reply_markup=query_kb.keyboard_main_menu)
 
 
 # НАЧАТЬ АНАЛИЗ
@@ -164,13 +166,7 @@ async def analyze_start(message: types.Message):
 async def analyze_process_product(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(text=f"Вы ввели продукт: {message.text}", reply_markup=query_kb.keyboard_main_menu)
-    await utils.show_reports(message, reports=Test.product)
-
-
-# КНОПКА ОТМЕНЫ АНАЛИЗА
-async def analyze_cansel(message: types.Message):
-    # TODO ПЕРЕДЕЛАТЬ В QUERY HANDLER
-    await main_menu(message)
+    await utils.show_products(message, owner="product", reports=Test.product)
 
 
 # ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ

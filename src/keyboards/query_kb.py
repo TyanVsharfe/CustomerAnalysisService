@@ -10,23 +10,29 @@ keyboard_admin_panel.add(InlineKeyboardButton(text="Назад", callback_data="
 keyboard_agreement = InlineKeyboardMarkup()
 keyboard_agreement.add(InlineKeyboardButton(text="Принять пользовательское соглашение", callback_data="accept_agreement"),)
 
-# ДЛЯ ПРОСМОТРА ОТЧЕТА ИЗБРАННОЕ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
+# ДЛЯ ПРОСМОТРА СПИСКА ОТЧЕТОВ ИЗБРАННОЕ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
 keyboard_history_report = InlineKeyboardMarkup()
 keyboard_history_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="history_up")
 keyboard_history_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="history_down")
 
+# ДЛЯ ПРОСМОТРА СПИСКА ОТЧЕТОВ ИСТОРИЯ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
+keyboard_favourite_report = InlineKeyboardMarkup()
+keyboard_favourite_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="favourite_up")
+keyboard_favourite_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="favourite_down")
+
+# ДЛЯ ПРОСМОТРА СПИСКА ПРОДУКТОВ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
+keyboard_products = InlineKeyboardMarkup()
+products_button_up = InlineKeyboardButton(text="Вверх", callback_data="product_up")
+products_button_down = InlineKeyboardButton(text="Вниз", callback_data="product_down")
+
 # Просмотр отчета
+# TODO СДЕЛАТЬ РЕАЛИЗАЦИЮ
 keyboard_watch_report = InlineKeyboardMarkup()
 watch_report_button_1 = InlineKeyboardButton(text="Добавить в избранное", callback_data="add_favourite")
 watch_report_button_2 = InlineKeyboardButton(text="Удалить", callback_data="delete_history_favourite")
 watch_report_button_3 = InlineKeyboardButton(text="Просмотр", callback_data="watch")
 keyboard_watch_report.add(watch_report_button_1)
 keyboard_watch_report.add(watch_report_button_2, watch_report_button_3)
-
-# ДЛЯ ПРОСМОТРА ОТЧЕТА ИСТОРИЯ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
-keyboard_favourite_report = InlineKeyboardMarkup()
-keyboard_favourite_report_button_up = InlineKeyboardButton(text="Вверх", callback_data="favourite_up")
-keyboard_favourite_report_button_down = InlineKeyboardButton(text="Вниз", callback_data="favourite_down")
 
 # Поменять роль
 keyboard_change_role = InlineKeyboardMarkup()
@@ -57,12 +63,19 @@ keyboard_analysis_type.add(analysis_type_button_3, analysis_type_button_4)
 # Интерактив с анализом
 # TODO СДЕЛАТЬ РЕАЛИЗАЦИЮ
 keyboard_aa = InlineKeyboardMarkup()
-aa_button_1 = InlineKeyboardButton(text="Открыть на сайте", callback_data="22")
-aa_button_2 = InlineKeyboardButton(text="Добавить в избранное", callback_data="32")
-aa_button_3 = InlineKeyboardButton(text="Назад", callback_data="23")
+aa_button_1 = InlineKeyboardButton(text="Открыть на сайте", callback_data="open_site")
+aa_button_2 = InlineKeyboardButton(text="Добавить в избранное", callback_data="add_fvrt")
+aa_button_3 = InlineKeyboardButton(text="Назад", callback_data="back_analysis")
 keyboard_aa.add(aa_button_1)
 keyboard_aa.add(aa_button_2)
 keyboard_aa.add(aa_button_3)
 
+# АДМИН-ПАНЕЛЬ
+keyboard_admin_panel = InlineKeyboardMarkup()
+admin_panel_button_1 = InlineKeyboardButton(text="Просмотр новых пользователей", callback_data="33")
+admin_panel_button_2 = InlineKeyboardButton(text="Просмотр активности", callback_data="22")
+admin_panel_button_4 = InlineKeyboardButton(text="Выбрать пользователя", callback_data="12")
+keyboard_admin_panel.add(admin_panel_button_1, admin_panel_button_2)
+keyboard_admin_panel.add(admin_panel_button_4)
 
 

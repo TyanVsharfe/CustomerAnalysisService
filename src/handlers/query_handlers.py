@@ -1,9 +1,7 @@
-from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 
 import Test
-from src import handlers
 from src.keyboards import query_kb, kb
 
 import utils
@@ -41,6 +39,7 @@ async def report_analysis_type(call: CallbackQuery):
 
 # Показываем данные отчета
 async def history_report(call: CallbackQuery):
+    # TODO
     url = call.data[4:]  # Извлекаем часть строки после "url="
     await call.message.answer(f"Открыт URL: {url}", reply_markup=query_kb.keyboard_watch_report)
     # await call.message.answer("Вернуться:", reply_markup=query_kb.keyboard_main_menu)
@@ -56,12 +55,18 @@ async def history_down_callback(call: CallbackQuery):
 
 async def favourites_up_callback(call: CallbackQuery):
     await utils.show_reports(message=call.message, owner="favourites", action="up", reports=Test.favourite_reports)
-    await call.message.answer("Вернуться:", reply_markup=query_kb.keyboard_main_menu)
 
 
 async def favourites_down_callback(call: CallbackQuery):
     await utils.show_reports(message=call.message, owner="favourites", action="down", reports=Test.favourite_reports)
-    await call.message.answer("Вернуться:", reply_markup=query_kb.keyboard_main_menu)
+
+
+async def product_up_callback(call: CallbackQuery):
+    await utils.show_products(message=call.message, owner="product", action="up", reports=Test.product)
+
+
+async def product_down_callback(call: CallbackQuery):
+    await utils.show_products(message=call.message, owner="product", action="down", reports=Test.product)
 
 
 # МЕНЯЕТСЯ РОЛЬ НА ПОЛЬЗОВАТЕЛЯ
@@ -74,6 +79,18 @@ async def personal_change_role_user(call: CallbackQuery):
                                   reply_markup=query_kb.keyboard_main_menu)
 
 
+# ДОБАВИТЬ В ИЗБРАННОЕ
+async def add_favourite_callback(call: CallbackQuery):
+    # TODO СДЕЛАТЬ ФУНКЦИОНАЛ
+    await call.message.answer("Отчет добавлен в избранное")
+
+
+# УДАЛИТЬ ОТЧЕТ ИЗ ИЗБРАННОГО ИЛИ ИСТОРИИ
+async def delete_favourite_history_callback(call: CallbackQuery):
+    # TODO СДЕЛАТЬ ФУНКЦИОНАЛ (1 или 2 метода хз)
+    await call.message.answer("Отчет удален")
+
+
 # МЕНЯЕТСЯ РОЛЬ НА МЕНЕДЖЕРА
 async def personal_change_role_manager(call: CallbackQuery):
     # TODO СДЕЛАТЬ ФУНКЦИОНАЛ
@@ -84,11 +101,13 @@ async def personal_change_role_manager(call: CallbackQuery):
                                   reply_markup=query_kb.keyboard_main_menu)
 
 
+# КНОПКА ОТМЕНЫ СМЕНЫ ТОКЕНА
 async def cancel_change_token(call: CallbackQuery, state: FSMContext):
     await state.finish()
     await admin_panel(call.message)
 
 
+# КНОПКА ОТМЕНЫ АНАЛИЗА
 async def cancel_product(call: CallbackQuery, state: FSMContext):
     await state.finish()
     await admin_panel(call.message)

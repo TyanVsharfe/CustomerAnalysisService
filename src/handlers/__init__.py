@@ -32,21 +32,27 @@ def register_handlers(dp: Dispatcher):
     dp.register_message_handler(handlers.personal_am_ban, text="Забанить")
     dp.register_message_handler(handlers.analyze_start, text="Начать анализ")
     dp.register_message_handler(handlers.analyze_process_product, state=Form.product)
-    dp.register_message_handler(handlers.analyze_cansel, text="Отмена")
 
 
 def register_query_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(query_handlers.main_menu_callback, text="main_menu")
     dp.register_callback_query_handler(query_handlers.admin_panel_callback, text="admin_panel")
     dp.register_callback_query_handler(query_handlers.history_report, lambda c: c.data.startswith("url="))
+
     dp.register_callback_query_handler(query_handlers.history_up_callback, text="history_up")
     dp.register_callback_query_handler(query_handlers.history_down_callback, text="history_down")
     dp.register_callback_query_handler(query_handlers.favourites_up_callback, text="favourite_up")
     dp.register_callback_query_handler(query_handlers.favourites_down_callback, text="favourite_down")
+    dp.register_callback_query_handler(query_handlers.product_up_callback, text="product_up")
+    dp.register_callback_query_handler(query_handlers.product_down_callback, text="product_down")
+
     dp.register_callback_query_handler(query_handlers.personal_change_role_user, text="make_user")
     dp.register_callback_query_handler(query_handlers.personal_change_role_manager, text="make_manager")
     dp.register_callback_query_handler(query_handlers.cancel_change_token, state=handlers.Form.change_token)
     dp.register_callback_query_handler(query_handlers.cancel_product, state=handlers.Form.product)
+
+    dp.register_callback_query_handler(query_handlers.add_favourite_callback, text="add_favourite")
+    dp.register_callback_query_handler(query_handlers.delete_favourite_history_callback, text="delete_history_favourite")
     dp.register_callback_query_handler(query_handlers.report_analysis_type, text="watch")
 
     dp.register_callback_query_handler(analysis.analysis_type_1, text="analysis_type_1")

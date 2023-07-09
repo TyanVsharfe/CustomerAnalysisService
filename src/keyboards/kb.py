@@ -10,7 +10,7 @@ keyboard_main_menu.add(mm_button_1, mm_button_2)
 keyboard_main_menu.add(mm_button_3, mm_button_4)
 
 # Главное меню админа и менеджера
-keyboard_main_menu_admin = types.ReplyKeyboardMarkup(resize_keyboard=True)
+keyboard_main_menu_admin = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 mm_admin_button_1 = types.KeyboardButton(text="Личный кабинет")
 mm_admin_button_2 = types.KeyboardButton(text="Начать анализ")
 mm_admin_button_3 = types.KeyboardButton(text="Избранное")

@@ -1,6 +1,7 @@
 import logging
 
 import aiogram
+import middleware
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
@@ -14,36 +15,37 @@ from src.handlers.handlers import main_menu_with_admin_panel
 from src.keyboards import query_kb, kb
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 # Initialize bot and dispatcher
 bot = Bot(token=config.BOT_TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
+dp.middleware.setup(middleware.BanMiddleware())
+# dp.middleware.setup(middleware.AgreementMiddleware())
 
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-    f = open('users.txt', 'w')
-    f.write(f"{message.from_user.id} {message.from_user.username}")
+    f = open('users.txt', 'a')
+    f.write(f"{message.from_user.id} {message.from_user.username}\n")
     f.close()
-    if Test.UserTest.status == "banned":
-        await handlers.Form.banned.set()
-        await message.answer("Вы заблокированы", reply_markup=types.ReplyKeyboardRemove())
+    logging.info(f"ID:{message.from_user.id} Пользователь {message.from_user.username} Начал работу с ботом")
+    if not Test.UserTest.agreement:
+        await message.reply("Привет! Перед началом работы вы должны прочитать и принять пользовательское соглашение.",
+                            reply_markup=types.ReplyKeyboardRemove())
+        await message.answer(text=config.terms_of_service, reply_markup=query_kb.keyboard_agreement)
+        Test.UserTest.agreement = True
     else:
-        if not Test.UserTest.agreement:
-            await message.reply("Привет! Перед началом работы вы должны прочитать и принять пользовательское соглашение.", reply_markup=types.ReplyKeyboardRemove())
-            await message.answer(text=config.terms_of_service, reply_markup=query_kb.keyboard_agreement)
-            Test.UserTest.agreement = True
+        if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
+            await main_menu_with_admin_panel(message)
         else:
-            if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
-                await main_menu_with_admin_panel(message)
-            else:
-                await message.answer("Вы вошли в главное меню", reply_markup=kb.keyboard_main_menu)
-        handlers.register_handlers(dp)
-        handlers.register_query_handlers(dp)
-        dp.message_handlers.unregister(start_message)
-        # dp.register_message_handler(agreement_message)
+            await message.answer("Вы вошли в главное меню", reply_markup=kb.keyboard_main_menu)
+    handlers.register_handlers(dp)
+    handlers.register_query_handlers(dp)
+    dp.message_handlers.register(start_message)
+    dp.message_handlers.unregister(start_message)
+    # dp.register_message_handler(agreement_message)
 
 
 @dp.message_handler()
@@ -58,11 +60,6 @@ async def start_message(message: types.Message):
 @dp.message_handler()
 async def agreement_message(message: types.Message):
     await message.answer("Для начала работы примите пользовательское соглашение")
-
-
-@dp.message_handler(state=handlers.Form.banned)
-async def handle_banned_commands(message: types.Message, state: FSMContext):
-    await message.answer("Вы заблокированы")
 
 
 @dp.callback_query_handler(text="accept_agreement")
