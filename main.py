@@ -27,9 +27,6 @@ dp.middleware.setup(middleware.BanMiddleware())
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-    f = open('users.txt', 'a')
-    f.write(f"{message.from_user.id} {message.from_user.username}\n")
-    f.close()
     logging.info(f"ID:{message.from_user.id} Пользователь {message.from_user.username} Начал работу с ботом")
     if not Test.UserTest.agreement:
         await message.reply("Привет! Перед началом работы вы должны прочитать и принять пользовательское соглашение.",

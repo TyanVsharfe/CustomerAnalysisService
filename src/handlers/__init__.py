@@ -1,7 +1,7 @@
 from aiogram import Dispatcher
 
-from src.handlers import handlers, query_handlers, analysis
-from src.handlers.handlers import Form
+from config import Form
+from src.handlers import handlers, query_handlers, analysis, admin_panel
 
 
 def register_handlers(dp: Dispatcher):
@@ -13,25 +13,26 @@ def register_handlers(dp: Dispatcher):
     dp.register_message_handler(handlers.main_menu, commands=['mm'])
     dp.register_message_handler(handlers.main_menu_with_admin_panel, commands=['puma'])
     dp.register_message_handler(handlers.personal_account_start, text='Личный кабинет')
-    dp.register_message_handler(handlers.admin_panel, text='Администрирование')
     dp.register_message_handler(handlers.personal_account, commands=['pau'])
-    dp.register_message_handler(handlers.select_user, text="Выбрать пользователя")
-    dp.register_message_handler(handlers.process_name, state=Form.username)
-    dp.register_message_handler(handlers.user_information, text="Информация о пользователе")
     dp.register_message_handler(handlers.personal_history, text="История")
     dp.register_message_handler(handlers.personal_history_clear, text="Очистить историю")
     dp.register_message_handler(handlers.personal_favourites, text="Избранное")
     dp.register_message_handler(handlers.personal_balance, text="Баланс токенов")
     dp.register_message_handler(handlers.personal_agreement, text="Пользовательское соглашение")
     dp.register_message_handler(handlers.personal_help, text="Помощь")
-    dp.register_message_handler(handlers.personal_change_token, text="Изменить количество токенов")
-    dp.register_message_handler(handlers.process_change_token, state=Form.change_token)
-    dp.register_message_handler(handlers.personal_change_role, text="Поменять роль")
     # dp.register_message_handler(personal_change_role_user, text="Сделать пользователем")
     # dp.register_message_handler(personal_change_role_manager, text="Сделать менеджером")
-    dp.register_message_handler(handlers.personal_am_ban, text="Забанить")
     dp.register_message_handler(handlers.analyze_start, text="Начать анализ")
     dp.register_message_handler(handlers.analyze_process_product, state=Form.product)
+
+    dp.register_message_handler(admin_panel.admin_panel, text='Администрирование')
+    dp.register_message_handler(admin_panel.select_user, text="Выбрать пользователя")
+    dp.register_message_handler(admin_panel.process_name, state=Form.username)
+    dp.register_message_handler(admin_panel.user_information, text="Информация о пользователе")
+    dp.register_message_handler(admin_panel.personal_change_token, text="Изменить количество токенов")
+    dp.register_message_handler(admin_panel.process_change_token, state=Form.change_token)
+    dp.register_message_handler(admin_panel.personal_change_role, text="Поменять роль")
+    dp.register_message_handler(admin_panel.personal_am_ban, text="Забанить")
 
 
 def register_query_handlers(dp: Dispatcher):
@@ -45,11 +46,11 @@ def register_query_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(query_handlers.favourites_down_callback, text="favourite_down")
     dp.register_callback_query_handler(query_handlers.product_up_callback, text="product_up")
     dp.register_callback_query_handler(query_handlers.product_down_callback, text="product_down")
+    dp.register_callback_query_handler(query_handlers.cancel_product, state=Form.product)
 
-    dp.register_callback_query_handler(query_handlers.personal_change_role_user, text="make_user")
-    dp.register_callback_query_handler(query_handlers.personal_change_role_manager, text="make_manager")
-    dp.register_callback_query_handler(query_handlers.cancel_change_token, state=handlers.Form.change_token)
-    dp.register_callback_query_handler(query_handlers.cancel_product, state=handlers.Form.product)
+    dp.register_callback_query_handler(admin_panel.personal_change_role_user, text="make_user")
+    dp.register_callback_query_handler(admin_panel.personal_change_role_manager, text="make_manager")
+    dp.register_callback_query_handler(admin_panel.cancel_change_token, state=Form.change_token)
 
     dp.register_callback_query_handler(query_handlers.add_favourite_callback, text="add_favourite")
     dp.register_callback_query_handler(query_handlers.delete_favourite_history_callback, text="delete_history_favourite")

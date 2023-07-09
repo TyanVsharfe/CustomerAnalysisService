@@ -8,14 +8,6 @@ import utils
 import Test
 
 
-class Form(StatesGroup):
-    username = State()
-    banned = State()
-    started = State()
-    change_token = State()
-    product = State()
-
-
 # ГЛАВНОЕ МЕНЮ
 async def main_menu(message: types.Message):
     keyboard = kb.keyboard_main_menu
@@ -49,13 +41,6 @@ async def main_menu_with_admin_panel(message: types.Message):
     await message.answer(text="Вы вошли в главное меню с админ-панелью", reply_markup=keyboard)
 
 
-# АДМИН-ПАНЕЛЬ
-async def admin_panel(message: types.Message):
-    if (Test.UserTest.role == "admin") | (Test.UserTest.role == "manager"):
-        await message.answer("Вы вошли в админ-панель", reply_markup=query_kb.keyboard_admin_panel)
-        await message.answer("Вернуться в главное меню:", reply_markup=query_kb.keyboard_main_menu)
-
-
 # ИСТОРИЯ
 async def personal_history(message: types.Message):
     keyboard = kb.keyboard_history
@@ -72,36 +57,6 @@ async def personal_history_clear(message: types.Message):
     await message.answer("Вернуться:", reply_markup=query_kb.keyboard_main_menu)
 
 
-# ВЫБРАТЬ ПОЛЬЗОВАТЕЛЯ
-async def select_user(message: types.Message):
-    await Form.username.set()
-    await message.answer("Введите @username пользователя:", reply_markup=query_kb.keyboard_admin_panel)
-
-
-# ВЫБРАТЬ ПОЛЬЗОВАТЕЛЯ (State)
-async def process_name(message: types.Message, state: FSMContext, User=None):
-    for u in Test.Users:
-        if u.username == message.text:
-            User = u
-            await state.finish()
-    if User is not None:
-        if Test.UserTest.role == "admin":
-            keyboard = kb.keyboard_select_user_admin
-        elif Test.UserTest.role == "manager":
-            keyboard = kb.keyboard_select_user_manager
-        else:
-            await message.answer("У вас нету доступа к данной команде")
-            return
-        await message.reply(f"Вы выбрали пользователя {User.username}, что хотите сделать?", reply_markup=keyboard)
-
-
-# ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
-async def user_information(message: types.Message):
-    await message.answer(f"Имя - {Test.UserTest.username}\n"
-                         f"Количество токенов - {Test.UserTest.token_count}\n"
-                         f"Роль - {Test.UserTest.role}", reply_markup=query_kb.keyboard_main_menu)
-
-
 # ИЗБРАННОЕ
 async def personal_favourites(message: types.Message):
     await message.answer("Вы вошли в избранные отчеты")
@@ -116,49 +71,9 @@ async def personal_balance(message: types.Message):
         reply_markup=query_kb.keyboard_main_menu)
 
 
-# ПОМЕНЯТЬ КОЛ-ВО ТОКЕНОВ
-async def personal_change_token(message: types.Message):
-    await Form.change_token.set()
-    await message.answer(
-        text=f"Количество токенов у пользователя {Test.UserTest.username}: {Test.UserTest.token_count}\n"
-             f"введите новое значение:",
-        reply_markup=query_kb.keyboard_cancel_change_role)
-
-
-# ПОМЕНЯТЬ КОЛ-ВО ТОКЕНОВ (State)
-async def process_change_token(message: types.Message, state: FSMContext):
-    if message.text.isdigit():
-        await state.finish()
-        Test.UserTest.token_count = message.text
-        await message.answer(
-            text=f"Новое количество токенов у пользователя {Test.UserTest.username}: {Test.UserTest.token_count}",
-            reply_markup=query_kb.keyboard_main_menu)
-    else:
-        await message.answer(text="Введено некорректное число, попробуйте снова")
-
-
-# ПОМЕНЯТЬ РОЛЬ
-async def personal_change_role(message: types.Message):
-    await message.answer(text=f"Пользователь: {Test.UserTest.username} \n Роль: {Test.UserTest.role}",
-                         reply_markup=query_kb.keyboard_change_role)
-
-
-# БАН/РАЗБАН
-async def personal_am_ban(message: types.Message):
-    # TODO ДОДЕЛАТЬ КОГДА СКИНУТ (ПЕРЕДЕЛАТЬ В QUERY HANDLER | БАН/РАЗБАН)
-    if Test.UserTest.status == "banned":
-        Test.UserTest.status = "active"
-        await message.answer(text=f"Пользователь {Test.UserTest.username} разбанен",
-                             reply_markup=query_kb.keyboard_main_menu)
-    else:
-        Test.UserTest.status = "banned"
-        await message.answer(text=f"Пользователь {Test.UserTest.username} забанен",
-                             reply_markup=query_kb.keyboard_main_menu)
-
-
 # НАЧАТЬ АНАЛИЗ
 async def analyze_start(message: types.Message):
-    await Form.product.set()
+    await config.Form.product.set()
     await message.answer(text=f"Введите наименование продукта", reply_markup=query_kb.keyboard_main_menu)
 
 

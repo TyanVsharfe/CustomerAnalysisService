@@ -44,6 +44,7 @@ async def show_reports(message: types.Message, owner, action="default", reports=
 
 
 # СКОРЕЕ ВСЕГО НЕ ПРИГОДИТСЯ
+# TODO НАВЕРНОЕ ПРОДУКТЫ НЕ БУДУТ ОТЛИЧАТЬСЯ ПО СТРУКТУРЕ ОТ ОТЧЕТОВ, ТОГДА МОЖНО УБРАТЬ
 async def show_products(message: types.Message, owner, action="default", reports=None):
     if (reports is None) | len(reports) == 0:
         await message.answer("Отчеты отсутствуют")

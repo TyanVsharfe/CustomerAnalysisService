@@ -2,10 +2,10 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 
 import Test
+from src.handlers.admin_panel import admin_panel
 from src.keyboards import query_kb, kb
 
 import utils
-from src.handlers.handlers import admin_panel
 
 
 # Переход в главное меню
@@ -69,16 +69,6 @@ async def product_down_callback(call: CallbackQuery):
     await utils.show_products(message=call.message, owner="product", action="down", reports=Test.product)
 
 
-# МЕНЯЕТСЯ РОЛЬ НА ПОЛЬЗОВАТЕЛЯ
-async def personal_change_role_user(call: CallbackQuery):
-    # TODO СДЕЛАТЬ ФУНКЦИОНАЛ
-    if Test.UserTest.role == Test.role[0]:
-        await call.message.answer(text="У пользователя уже имеется такая роль")
-    else:
-        await call.message.answer(text=f"Пользователю {Test.UserTest.username} \n Выдана роль: {Test.UserTest.role}",
-                                  reply_markup=query_kb.keyboard_main_menu)
-
-
 # ДОБАВИТЬ В ИЗБРАННОЕ
 async def add_favourite_callback(call: CallbackQuery):
     # TODO СДЕЛАТЬ ФУНКЦИОНАЛ
@@ -89,22 +79,6 @@ async def add_favourite_callback(call: CallbackQuery):
 async def delete_favourite_history_callback(call: CallbackQuery):
     # TODO СДЕЛАТЬ ФУНКЦИОНАЛ (1 или 2 метода хз)
     await call.message.answer("Отчет удален")
-
-
-# МЕНЯЕТСЯ РОЛЬ НА МЕНЕДЖЕРА
-async def personal_change_role_manager(call: CallbackQuery):
-    # TODO СДЕЛАТЬ ФУНКЦИОНАЛ
-    if Test.UserTest.role == Test.role[1]:
-        await call.message.answer(text="У пользователя уже имеется такая роль")
-    else:
-        await call.message.answer(text=f"Пользователю {Test.UserTest.username} \n Выдана роль: {Test.UserTest.role}",
-                                  reply_markup=query_kb.keyboard_main_menu)
-
-
-# КНОПКА ОТМЕНЫ СМЕНЫ ТОКЕНА
-async def cancel_change_token(call: CallbackQuery, state: FSMContext):
-    await state.finish()
-    await admin_panel(call.message)
 
 
 # КНОПКА ОТМЕНЫ АНАЛИЗА
