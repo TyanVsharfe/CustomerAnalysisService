@@ -7,6 +7,8 @@ import Test
 from config import Form
 from src.keyboards import query_kb, kb
 
+ChooseUser = None
+
 
 # АДМИН ПАНЕЛЬ
 async def admin_panel(message: types.Message):
@@ -22,12 +24,12 @@ async def select_user(message: types.Message):
 
 
 # ВЫБРАТЬ ПОЛЬЗОВАТЕЛЯ (State)
-async def process_name(message: types.Message, state: FSMContext, User=None):
+async def process_name(message: types.Message, state: FSMContext, user=None):
     for u in Test.Users:
         if u.username == message.text:
-            User = u
+            user = u
             await state.finish()
-    if User is not None:
+    if user is not None:
         if Test.UserTest.role == "admin":
             keyboard = kb.keyboard_select_user_admin
         elif Test.UserTest.role == "manager":
@@ -35,7 +37,7 @@ async def process_name(message: types.Message, state: FSMContext, User=None):
         else:
             await message.answer("У вас нету доступа к данной команде")
             return
-        await message.reply(f"Вы выбрали пользователя {User.username}, что хотите сделать?", reply_markup=keyboard)
+        await message.reply(f"Вы выбрали пользователя {user.username}, что хотите сделать?", reply_markup=keyboard)
 
 
 # ПОМЕНЯТЬ КОЛ-ВО ТОКЕНОВ

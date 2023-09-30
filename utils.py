@@ -28,7 +28,7 @@ async def show_reports(message: types.Message, owner, action="default", reports=
         else:
             reports_kb.add(query_kb.keyboard_favourite_report_button_up)
     for i in reports[report_position:]:
-        reports_kb.add(InlineKeyboardButton(text=f"{i}", callback_data=f"url=bebra_report_{i}"))
+        reports_kb.add(InlineKeyboardButton(text=f"{i}", callback_data=f"url=test_report_{i}"))
         if current_position >= 10:
             break
         current_position += 1

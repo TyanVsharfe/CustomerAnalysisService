@@ -8,7 +8,8 @@ keyboard_admin_panel = InlineKeyboardMarkup()
 keyboard_admin_panel.add(InlineKeyboardButton(text="Назад", callback_data="admin_panel"),)
 
 keyboard_agreement = InlineKeyboardMarkup()
-keyboard_agreement.add(InlineKeyboardButton(text="Принять пользовательское соглашение", callback_data="accept_agreement"),)
+keyboard_agreement.add(InlineKeyboardButton(text="Принять пользовательское соглашение",
+                                            callback_data="accept_agreement"))
 
 # ДЛЯ ПРОСМОТРА СПИСКА ОТЧЕТОВ ИЗБРАННОЕ (НЕ КЛАВИАТУРА, ИСПОЛЬЗУЮТСЯ ТОЛЬКО КНОПКИ)
 keyboard_history_report = InlineKeyboardMarkup()
