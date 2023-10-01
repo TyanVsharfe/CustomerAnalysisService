@@ -2,9 +2,8 @@ import aiohttp
 
 
 # TODO ДОПИСАТЬ ХУЙ ЗНАЕТ ЧТО ТУТ ПОЛУЧАТЬ
-async def user_login():
+async def user_login(user_id=872687341):
     url = 'https://api.dlsky.site/api/v1/login'
-    user_id = 872687341
 
     params = {
         'user_id': user_id,
@@ -21,9 +20,8 @@ async def user_login():
 
 
 # TODO ТУТ ТОЖЕ САМОЕ ЧЕ КАВО КУДА ГДЕ ТОКЕНЫ ВАХУИ
-async def user_signup():
+async def user_signup(user_id = 872687341):
     url = 'https://api.dlsky.site/api/v1/signup'
-    user_id = 872687341
 
     params = {
         'user_id': user_id,
@@ -37,3 +35,4 @@ async def user_signup():
                 print(data)
             else:
                 print(f"Ошибка при выполнении запроса: {response.status}")
+

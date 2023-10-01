@@ -3,11 +3,15 @@ import asyncio
 import json
 
 
-async def fetch_all_history():
+async def fetch_all_history(history_id=8334341):
     url = 'https://api.dlsky.site/api/v1/history/all'
 
+    params = {
+        'history_id': history_id,
+    }
+
     async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
+        async with session.get(url, params=params) as response:
             if response.status == 200:
                 data = await response.json()
                 # В переменной data с есть весь JSON-ответ как словарь Python
@@ -16,11 +20,12 @@ async def fetch_all_history():
                 print(f"Ошибка при выполнении запроса: {response.status}")
 
 
-async def fetch_history():
+async def send_history(title="historyOne",  history_url="https://history/2567"):
     url = 'https://api.dlsky.site/api/v1/history/'
 
     payload = {
-        # Тело POST-запроса, надо или нет хз
+        'title': title,
+        'url': history_url
     }
 
     async with aiohttp.ClientSession() as session:

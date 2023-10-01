@@ -2,9 +2,8 @@ import aiohttp
 import asyncio
 
 
-async def ban_user():
+async def ban_user(user_id=872687341):
     url = 'https://api.dlsky.site/api/v1/admin/ban'
-    user_id = 872687341
 
     payload = {
         'user_id': user_id
@@ -18,10 +17,8 @@ async def ban_user():
                 print(f"Ошибка при выполнении POST-запроса: {response.status}")
 
 
-async def change_user_role():
+async def change_user_role(user_id=872687341, role="user"):
     url = 'https://api.dlsky.site/api/v1/admin/role'
-    user_id = 872687341
-    role = "user"
 
     payload = {
         'user_id': user_id,
@@ -36,10 +33,8 @@ async def change_user_role():
                 print(f"Ошибка при выполнении POST-запроса: {response.status}")
 
 
-async def add_user_token():
+async def add_user_token(user_id=872687341, tokens=100):
     url = 'https://api.dlsky.site/api/v1/admin/token'
-    user_id = 872687341
-    tokens = 100
 
     payload = {
         'user_id': user_id,
@@ -54,9 +49,8 @@ async def add_user_token():
                 print(f"Ошибка при выполнении POST-запроса: {response.status}")
 
 
-async def fetch_user_activity():
+async def fetch_user_activity(user_id=872687341):
     url = 'https://api.dlsky.site/api/v1/admin/activity'
-    user_id = 872687341
 
     params = {
         'user_id': user_id,
