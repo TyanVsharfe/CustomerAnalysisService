@@ -73,9 +73,9 @@ keyboard_aa.add(aa_button_3)
 
 # АДМИН-ПАНЕЛЬ
 keyboard_admin_panel = InlineKeyboardMarkup()
-admin_panel_button_1 = InlineKeyboardButton(text="Просмотр новых пользователей", callback_data="33")
-admin_panel_button_2 = InlineKeyboardButton(text="Просмотр активности", callback_data="22")
-admin_panel_button_4 = InlineKeyboardButton(text="Выбрать пользователя", callback_data="12")
+admin_panel_button_1 = InlineKeyboardButton(text="Просмотр новых пользователей", callback_data="select_new_users")
+admin_panel_button_2 = InlineKeyboardButton(text="Просмотр активности", callback_data="select_users_activity")
+admin_panel_button_4 = InlineKeyboardButton(text="Выбрать пользователя", callback_data="select_user")
 keyboard_admin_panel.add(admin_panel_button_1, admin_panel_button_2)
 keyboard_admin_panel.add(admin_panel_button_4)
 

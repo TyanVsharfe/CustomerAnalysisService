@@ -3,6 +3,7 @@ from aiogram.dispatcher.middlewares import BaseMiddleware
 
 import Test
 import config
+from src.data_fetchers.users import fetch_accept_terms
 from src.keyboards import query_kb
 
 
@@ -19,12 +20,12 @@ class BanMiddleware(BaseMiddleware):
 class AgreementMiddleware(BaseMiddleware):
     @staticmethod
     async def on_pre_process_message(msg: types.Message, data: dict):
-        if (msg.text == "/start") & (not Test.UserTest.agreement):
+        if (msg.text == "/start") & (not fetch_accept_terms(msg.from_user.id)):
             await msg.answer("Привет! Перед началом работы вы должны прочитать и принять пользовательское соглашение.",
                              reply_markup=types.ReplyKeyboardRemove())
             await msg.answer(text=config.terms_of_service, reply_markup=query_kb.keyboard_agreement)
             raise IgnoreException()
-        elif (not Test.UserTest.agreement) & (Test.UserTest.registration is not None):
+        elif not fetch_accept_terms(msg.from_user.id):
             await msg.answer("Для начала работы примите пользовательское соглашение")
             raise IgnoreException()
         else:

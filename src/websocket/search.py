@@ -1,35 +1,22 @@
 import json
 import websockets
 
-
-# TODO Шаблон, сделать для всего анализа
-async def hello():
-    uri = "ws://localhost:8765"
-    async with websockets.connect(uri) as websocket:
-        name = input("What's your name? ")
-
-        await websocket.send(name)
-        print(f">>> {name}")
-
-        greeting = await websocket.recv()
-        print(f"<<< {greeting}")
+from config import API_KEY
 
 
 # TODO Дописать шаблон
-async def run_search_products():
-    async with websockets.connect('ws://сервер/websocket/путь') as websocket:
-        # Запрос в формате JSON
-        request_data = {
-            "method": "run_search_products",
-            "args": ["Чайник Т-1000"]
-        }
+async def run_search_products(search_input, user_id):
 
-        # Отправьте запрос на сервер
-        await websocket.send(json.dumps(request_data))
+    headers = {'Telegram-User-Id': str(user_id),
+               'X-API-Key': API_KEY}
+
+    async with websockets.connect(f'ws://api.dlsky.site/api/v1/analysis/ws/search?search_input{search_input}',
+                                  extra_headers=headers, max_size=5000000) as websocket:
 
         # Получите ответ от сервера
         response = await websocket.recv()
         print(f"Ответ от сервера: {response}")
+        return response
 
 
 # TODO Юзаем его после run_search_produtcs

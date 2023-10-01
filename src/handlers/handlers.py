@@ -3,9 +3,13 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 import config
+from src.data_fetchers.bookmarks import fetch_all_bookmarks
+from src.data_fetchers.histories import delete_all_history, fetch_all_history
+from src.data_fetchers.users import fetch_user_tokens
 from src.keyboards import query_kb, kb
 import utils
 import Test
+from src.websocket.search import run_search_products
 
 
 # ГЛАВНОЕ МЕНЮ
@@ -44,6 +48,7 @@ async def main_menu_with_admin_panel(message: types.Message):
 # ИСТОРИЯ
 async def personal_history(message: types.Message):
     keyboard = kb.keyboard_history
+    await fetch_all_history(message.from_user.id)
     await message.answer("Вы вошли в историю запросов", reply_markup=keyboard)
     await utils.show_reports(message, "history", reports=Test.reports)
     await message.answer("Вернуться:", reply_markup=query_kb.keyboard_main_menu)
@@ -52,22 +57,25 @@ async def personal_history(message: types.Message):
 # ОЧИСТИТЬ ИСТОРИЮ
 async def personal_history_clear(message: types.Message):
     Test.reports.clear()
+    await delete_all_history(message.from_user.id)
     keyboard = kb.keyboard_history
     await message.answer("История очищена", reply_markup=keyboard)
     await message.answer("Вернуться:", reply_markup=query_kb.keyboard_main_menu)
 
 
 # ИЗБРАННОЕ
-async def personal_favourites(message: types.Message):
+async def personal_bookmarks(message: types.Message):
     await message.answer("Вы вошли в избранные отчеты")
-    await utils.show_reports(message, "favourites", reports=Test.favourite_reports)
+    await fetch_all_bookmarks(message.from_user.id)
+    await utils.show_reports(message, "favourites", reports=Test.favourite_reports) # reports=Test.favourite_reports
     await message.answer("Вернуться:", reply_markup=query_kb.keyboard_main_menu)
 
 
 # ПОКАЗЫВАЕТ ТЕКУЩИЙ БАЛАНС ТОКЕНОВ
 async def personal_balance(message: types.Message):
+    tokens = await fetch_user_tokens(message.from_user.id)
     await message.answer(
-        text=f"Количество токенов у пользователя {Test.UserTest.username}: {Test.UserTest.token_count}",
+        text=f"Количество токенов у пользователя {message.from_user.username}: {tokens}",
         reply_markup=query_kb.keyboard_main_menu)
 
 
@@ -81,6 +89,8 @@ async def analyze_start(message: types.Message):
 async def analyze_process_product(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(text=f"Вы ввели продукт: {message.text}", reply_markup=query_kb.keyboard_main_menu)
+    result = await run_search_products(message.text, message.from_user.id)
+    print(result)
     await utils.show_products(message, owner="product", reports=Test.product)
 
 

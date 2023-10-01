@@ -2,16 +2,17 @@ import aiohttp
 import asyncio
 import json
 
+from config import API_KEY
 
-async def fetch_all_history(history_id=8334341):
+
+async def fetch_all_history(user_id):
     url = 'https://api.dlsky.site/api/v1/history/all'
 
-    params = {
-        'history_id': history_id,
-    }
+    headers = {'Telegram-User-Id': str(user_id),
+               'X-API-Key': API_KEY}
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(url, params=params) as response:
+        async with session.get(url, headers=headers) as response:
             if response.status == 200:
                 data = await response.json()
                 # В переменной data с есть весь JSON-ответ как словарь Python
@@ -43,11 +44,14 @@ async def send_history(title="historyOne",  history_url="https://history/2567"):
                 print(f"Ошибка при выполнении POST-запроса: {response.status}")
 
 
-async def delete_data():
+async def delete_all_history(user_id):
     url = 'https://api.dlsky.site/api/v1/history/all'
 
+    headers = {'Telegram-User-Id': str(user_id),
+               'X-API-Key': API_KEY}
+
     async with aiohttp.ClientSession() as session:
-        async with session.delete(url) as response:
+        async with session.delete(url, headers=headers, ssl=False) as response:
             if response.status == 204:
                 print("История успешно выполнен.")
             else:

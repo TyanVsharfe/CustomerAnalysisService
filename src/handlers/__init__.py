@@ -16,7 +16,7 @@ def register_handlers(dp: Dispatcher):
     dp.register_message_handler(handlers.personal_account, commands=['pau'])
     dp.register_message_handler(handlers.personal_history, text="История")
     dp.register_message_handler(handlers.personal_history_clear, text="Очистить историю")
-    dp.register_message_handler(handlers.personal_favourites, text="Избранное")
+    dp.register_message_handler(handlers.personal_bookmarks, text="Избранное")
     dp.register_message_handler(handlers.personal_balance, text="Баланс токенов")
     dp.register_message_handler(handlers.personal_agreement, text="Пользовательское соглашение")
     dp.register_message_handler(handlers.personal_help, text="Помощь")
@@ -26,9 +26,10 @@ def register_handlers(dp: Dispatcher):
     dp.register_message_handler(handlers.analyze_process_product, state=Form.product)
 
     dp.register_message_handler(admin_panel.admin_panel, text='Администрирование')
-    dp.register_message_handler(admin_panel.select_user, text="Выбрать пользователя")
+
     dp.register_message_handler(admin_panel.process_name, state=Form.username)
     dp.register_message_handler(admin_panel.user_information, text="Информация о пользователе")
+
     dp.register_message_handler(admin_panel.personal_change_token, text="Изменить количество токенов")
     dp.register_message_handler(admin_panel.process_change_token, state=Form.change_token)
     dp.register_message_handler(admin_panel.personal_change_role, text="Поменять роль")
@@ -39,6 +40,10 @@ def register_query_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(query_handlers.main_menu_callback, text="main_menu")
     dp.register_callback_query_handler(query_handlers.admin_panel_callback, text="admin_panel")
     dp.register_callback_query_handler(query_handlers.history_report, lambda c: c.data.startswith("url="))
+
+    dp.register_callback_query_handler(admin_panel.select_new_users, text="select_new_users")
+    dp.register_callback_query_handler(admin_panel.select_users_activity, text="select_users_activity")
+    dp.register_callback_query_handler(admin_panel.select_user, text="select_user")
 
     dp.register_callback_query_handler(query_handlers.history_up_callback, text="history_up")
     dp.register_callback_query_handler(query_handlers.history_down_callback, text="history_down")
