@@ -3,8 +3,7 @@ import aiohttp
 from config import API_KEY
 
 
-# TODO ДОПИСАТЬ ХУЙ ЗНАЕТ ЧТО ТУТ ПОЛУЧАТЬ
-async def user_login(user_id=872687341):
+async def user_login(user_id):
     url = 'https://api.dlsky.site/api/v1/login'
 
     params = {

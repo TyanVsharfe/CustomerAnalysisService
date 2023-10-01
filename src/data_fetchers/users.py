@@ -5,7 +5,6 @@ import json
 from config import API_KEY
 
 
-# TODO ХУЙ ПРОССЫШ КАКОГО ВИДА ОТВЕТ И ЧЕ ЕМУ ПЕРЕДАВАТЬ
 async def fetch_accept_terms(user_id):
     url = 'https://api.dlsky.site/api/v1/users/accept-terms'
 
@@ -20,7 +19,7 @@ async def fetch_accept_terms(user_id):
                 print(f"Все ок")
                 return True
             else:
-                print(f"Говно запрос: {response.status}")
+                print(f"Плохой запрос: {response.status}")
                 return False
 
 
@@ -89,7 +88,7 @@ async def fetch_user_by_username(user_id, username):
                 # print(my_array)
 
                 return user_info
-                # if 'message' in json_data:  # message меняем на название поля ну и ваще я ебу че там надо, имя тип
+                # if 'message' in json_data:  # message меняем на название поля ну и
                 #     # еще чет, доделать надо
                 #     extracted_string = json_data['message']
                 #     print(f"Извлеченная строка: {extracted_string}")
@@ -115,7 +114,7 @@ async def fetch_user_tokens(user_id):
             if response.status == 200:
                 data = await response.text()
                 json_data = json.loads(data)
-                if 'tokens' in json_data:  # message меняем на название поля ну и ваще я ебу че там надо, имя тип
+                if 'tokens' in json_data:
                     # еще чет, доделать надо
                     print(f"Извлеченная строка: {json_data['tokens']}")
                     return json_data['tokens']

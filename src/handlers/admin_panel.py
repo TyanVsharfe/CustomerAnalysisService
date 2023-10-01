@@ -152,7 +152,6 @@ async def personal_change_role(message: types.Message):
 
 # МЕНЯЕТСЯ РОЛЬ НА МЕНЕДЖЕРА
 async def personal_change_role_manager(call: CallbackQuery):
-    # TODO СДЕЛАТЬ ФУНКЦИОНАЛ
     if Test.UserTest.role == Test.role[1]:
         await call.message.answer(text="У пользователя уже имеется такая роль")
     else:
@@ -162,7 +161,6 @@ async def personal_change_role_manager(call: CallbackQuery):
 
 # МЕНЯЕТСЯ РОЛЬ НА ПОЛЬЗОВАТЕЛЯ
 async def personal_change_role_user(call: CallbackQuery):
-    # TODO СДЕЛАТЬ ФУНКЦИОНАЛ
     print(call.from_user.id, selected_user)
     user_info = await fetch_user_by_username(user_id=call.from_user.id, username=selected_user[0])
     print(f"personal_change_role_user -> {user_info} перед ифчиком")
